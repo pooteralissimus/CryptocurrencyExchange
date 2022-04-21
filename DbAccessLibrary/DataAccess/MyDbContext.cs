@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DbAccessLibrary.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace DbAccessLibrary.DataAccess
     public class MyDbContext : DbContext
     {
         public MyDbContext(DbContextOptions options) : base(options) { }
+        public DbSet<UserBalance> UserBalance { get; set; }
     }
 }

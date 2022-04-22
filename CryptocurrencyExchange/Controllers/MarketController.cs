@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 
 namespace CryptocurrencyExchange.Controllers
 {
@@ -7,19 +8,24 @@ namespace CryptocurrencyExchange.Controllers
     {
         public IActionResult Index()
         {
-
+            List<dynamic> coinsPrice = new List<dynamic>();
+            string[] coinsName = { "BTCUSDT", "ETHUSDT", "SOLUSDT", "LUNAUSDT","BNBUSDT",
+                "XRPUSDT", "DOGEUSDT", "SHIBUSDT", "AXSUSDT","MANAUSDT" };
             string json;
-            using (var web = new System.Net.WebClient())
+
+            foreach(var coinName in coinsName)
             {
-                var url = @"https://api.coindesk.com/v1/bpi/currentprice.json";
-                json = web.DownloadString(url);
+                using (var web = new System.Net.WebClient())
+                {
+                    var url = $"https://api.binance.com/api/v3/ticker/price?symbol={coinName}";
+                    json = web.DownloadString(url);
+                }
+
+                dynamic coinInfo = Newtonsoft.Json.JsonConvert.DeserializeObject(json);
+                coinsPrice.Add(coinInfo);
             }
-
-            dynamic obj = Newtonsoft.Json.JsonConvert.DeserializeObject(json);
-            var currentPrice = Convert.ToDecimal(obj.bpi.USD.rate.Value);
-            Console.WriteLine(currentPrice);
-
-            return View(currentPrice);
+          
+            return View(coinsPrice);
         }
     }
 }

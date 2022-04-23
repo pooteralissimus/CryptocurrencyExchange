@@ -1,0 +1,372 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat:100,200,300,regular,500,600,700,800,900,100italic,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic);
+
+@charset "UTF-8";
+
+* {
+    padding: 0px;
+    margin: 0px;
+    border: 0px;
+}
+
+    *,
+    *:before,
+    *:after {
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+html,
+body {
+    height: 100%;
+    min-width: 320px;
+}
+
+body {
+    color: #000;
+    line-height: 1;
+    font-family: "Montserrat";
+    font-size: 0.875rem;
+    -ms-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+input,
+button,
+textarea {
+    font-family: "Montserrat";
+    font-size: inherit;
+}
+
+button {
+    cursor: pointer;
+    color: inherit;
+    background-color: inherit;
+}
+
+a {
+    color: inherit;
+}
+
+    a:link,
+    a:visited {
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: none;
+    }
+
+ul li {
+    list-style: none;
+}
+
+img {
+    vertical-align: top;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: inherit;
+    font-size: inherit;
+}
+
+body {
+    font-weight: 500;
+}
+
+.lock body {
+    overflow: hidden;
+    -ms-touch-action: none;
+    touch-action: none;
+}
+
+.wrapper {
+    min-height: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+    .wrapper > main {
+        -webkit-box-flex: 1;
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+    }
+
+    .wrapper > * {
+        min-width: 0;
+    }
+
+/*
+(i) Стили будут применяться ко 
+всем классам содержащим *__container
+Например header__container, main__container и т.д.
+Снипет (HTML): cnt
+*/
+
+[class*=__container] {
+    max-width: 75rem;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+    margin: 0 auto;
+    padding: 0 0.9375rem;
+}
+
+[class*=-ibg] {
+    position: relative;
+}
+
+    [class*=-ibg] img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        -o-object-fit: cover;
+        object-fit: cover;
+    }
+
+[class*=-ibg_contain] img {
+    -o-object-fit: contain;
+    object-fit: contain;
+}
+
+/*
+.icon-menu {
+	display: none;
+	@media (max-width: $mobile) {
+		display: block;
+		position: relative;
+		width: rem(30);
+		height: rem(18);
+		cursor: pointer;
+		z-index: 5;
+		span,
+		&::before,
+		&::after {
+			content: "";
+			transition: all 0.3s ease 0s;
+			right: 0;
+			position: absolute;
+			width: 100%;
+			height: rem(2);
+			background-color: #000;
+		}
+		&::before {
+			top: 0;
+		}
+		&::after {
+			bottom: 0;
+		}
+		span {
+			top: calc(50% - rem(1));
+		}
+		.menu-open & {
+			span {
+				width: 0;
+			}
+			&::before,
+			&::after {
+			}
+			&::before {
+				top: calc(50% - rem(1));
+				transform: rotate(-45deg);
+			}
+			&::after {
+				bottom: calc(50% - rem(1));
+				transform: rotate(45deg);
+			}
+		}
+	}
+}
+*/
+
+.crypto-table {
+    overflow-x: auto;
+    font-size: 1rem;
+}
+
+@supports (padding-top: clamp( 3.75rem , 2.8708791209rem  +  4.3956043956vw , 6.25rem )) {
+    .crypto-table {
+        padding-top: clamp( 3.75rem, 2.8708791209rem + 4.3956043956vw, 6.25rem );
+    }
+}
+
+@supports not (padding-top: clamp( 3.75rem , 2.8708791209rem  +  4.3956043956vw , 6.25rem )) {
+    .crypto-table {
+        padding-top: calc(3.75rem + 2.5 * (100vw - 20rem) / 56.875);
+    }
+}
+
+.crypto-table__row {
+    display: -ms-grid;
+    display: grid;
+    grid-auto-flow: column;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    border-bottom: 1px solid rgb(234, 236, 239);
+    min-height: 4rem;
+}
+
+@supports (gap: clamp( 0.9375rem , 0.4900727069rem  +  2.2371364653vw , 1.5625rem )) {
+    .crypto-table__row {
+        gap: clamp( 0.9375rem, 0.4900727069rem + 2.2371364653vw, 1.5625rem );
+    }
+}
+
+@supports not (gap: clamp( 0.9375rem , 0.4900727069rem  +  2.2371364653vw , 1.5625rem )) {
+    .crypto-table__row {
+        gap: calc(0.9375rem + 0.625 * (100vw - 20rem) / 27.9375);
+    }
+}
+
+@supports (padding-left: clamp( 0.3125rem , -0.1349272931rem  +  2.2371364653vw , 0.9375rem )) {
+    .crypto-table__row {
+        padding-left: clamp( 0.3125rem, -0.1349272931rem + 2.2371364653vw, 0.9375rem );
+    }
+}
+
+@supports not (padding-left: clamp( 0.3125rem , -0.1349272931rem  +  2.2371364653vw , 0.9375rem )) {
+    .crypto-table__row {
+        padding-left: calc(0.3125rem + 0.625 * (100vw - 20rem) / 27.9375);
+    }
+}
+
+@supports (padding-right: clamp( 0.3125rem , -0.1349272931rem  +  2.2371364653vw , 0.9375rem )) {
+    .crypto-table__row {
+        padding-right: clamp( 0.3125rem, -0.1349272931rem + 2.2371364653vw, 0.9375rem );
+    }
+}
+
+@supports not (padding-right: clamp( 0.3125rem , -0.1349272931rem  +  2.2371364653vw , 0.9375rem )) {
+    .crypto-table__row {
+        padding-right: calc(0.3125rem + 0.625 * (100vw - 20rem) / 27.9375);
+    }
+}
+
+.row-crypto-table_right {
+    text-align: right;
+}
+
+.row-crypto-table__price {
+    letter-spacing: 0.05em;
+    text-align: right;
+}
+
+.row-crypto-table__percent {
+    letter-spacing: 0.05em;
+}
+
+.row-crypto-table__percent_red {
+    color: #CF304A;
+}
+
+.row-crypto-table__percent_green {
+    color: #03A66D;
+}
+
+.row-crypto-table__amount {
+    letter-spacing: 0.05em;
+}
+
+.row-crypto-table__capitalisation {
+    letter-spacing: 0.05em;
+}
+
+.row-crypto-table__links {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+}
+
+@supports ((-moz-column-gap: clamp( 0.3125rem , -0.1349272931rem  +  2.2371364653vw , 0.9375rem )) or (column-gap: clamp( 0.3125rem , -0.1349272931rem  +  2.2371364653vw , 0.9375rem ))) {
+    .row-crypto-table__links {
+        -webkit-column-gap: clamp( 0.3125rem, -0.1349272931rem + 2.2371364653vw, 0.9375rem );
+        -moz-column-gap: clamp( 0.3125rem, -0.1349272931rem + 2.2371364653vw, 0.9375rem );
+        column-gap: clamp( 0.3125rem, -0.1349272931rem + 2.2371364653vw, 0.9375rem );
+    }
+}
+
+@supports not ((-moz-column-gap: clamp( 0.3125rem , -0.1349272931rem  +  2.2371364653vw , 0.9375rem )) or (column-gap: clamp( 0.3125rem , -0.1349272931rem  +  2.2371364653vw , 0.9375rem ))) {
+    .row-crypto-table__links {
+        -webkit-column-gap: calc(0.3125rem + 0.625 * (100vw - 20rem) / 27.9375);
+        -moz-column-gap: calc(0.3125rem + 0.625 * (100vw - 20rem) / 27.9375);
+        column-gap: calc(0.3125rem + 0.625 * (100vw - 20rem) / 27.9375);
+    }
+}
+
+.row-crypto-table__link {
+    color: rgb(201, 148, 0);
+}
+
+.left-elem-row-crypto-table {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    gap: 0.625rem;
+}
+
+.left-elem-row-crypto-table__icon img {
+    width: 2rem;
+    height: 2rem;
+}
+
+.left-elem-row-crypto-table__title {
+    line-height: 1.5;
+    font-weight: 600;
+}
+
+.left-elem-row-crypto-table__small {
+    font-size: 0.875rem;
+    line-height: 1.4285714286;
+    color: rgb(112, 122, 138);
+}
+
+@media (min-width: 47.9375em) {
+    .crypto-table__row {
+        gap: inherit;
+    }
+
+    .crypto-table__row {
+        padding-left: inherit;
+    }
+
+    .crypto-table__row {
+        padding-right: inherit;
+    }
+}
+
+@media (max-width: 47.99875em) {
+    .row-crypto-table__links {
+        margin-left: 1.875rem;
+    }
+
+    .left-elem-row-crypto-table {
+        margin-right: 1.875rem;
+    }
+}
+
+@media (any-hover: hover) {
+    .row-crypto-table__link:hover {
+        text-decoration: underline;
+    }
+}

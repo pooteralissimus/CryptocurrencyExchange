@@ -15,7 +15,7 @@ namespace ClassLibrary
             {
                 using (var web = new System.Net.WebClient())
                 {
-                    var url = $"https://api.binance.com/api/v3/ticker/price?symbol={coinName}";
+                    var url = $"https://api.binance.com/api/v3/ticker/price?symbol={coinName}USDT";
                     json = web.DownloadString(url);
                 }
 

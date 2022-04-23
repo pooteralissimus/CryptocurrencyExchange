@@ -14,8 +14,8 @@ namespace CryptocurrencyExchange.Controllers
 
         public IActionResult Index()
         {
-            string[] coinsName = { "BTCUSDT", "ETHUSDT", "SOLUSDT", "LUNAUSDT","BNBUSDT",
-                "XRPUSDT", "DOGEUSDT", "SHIBUSDT", "AXSUSDT","MANAUSDT", "LTCUSDT", "ATOMUSDT" };
+            string[] coinsName = { "BTC", "ETH", "SOL", "LUNA","BNB",
+                "XRP", "DOGE", "SHIB", "AXS","MANA", "LTC", "ATOM" };
 
             List<CoinOutputModel> outputCoins = new List<CoinOutputModel>();
 

@@ -15,17 +15,22 @@ namespace CryptocurrencyExchange.Controllers
         public IActionResult Index()
         {
             string[] coinsName = { "BTCUSDT", "ETHUSDT", "SOLUSDT", "LUNAUSDT","BNBUSDT",
-                "XRPUSDT", "DOGEUSDT", "SHIBUSDT", "AXSUSDT","MANAUSDT" };
+                "XRPUSDT", "DOGEUSDT", "SHIBUSDT", "AXSUSDT","MANAUSDT", "LTCUSDT", "ATOMUSDT" };
 
             List<CoinOutputModel> outputCoins = new List<CoinOutputModel>();
 
             var prices = CryptocurrencyOperations.GetPrices(coinsName);
 
-            foreach (var price in prices)
-            {
+            //foreach (var price in prices)
+            //{
 
-            }
+            //}
 
+            return View(prices);
+        }
+
+        public IActionResult Details()
+        {
             return View();
         }
 

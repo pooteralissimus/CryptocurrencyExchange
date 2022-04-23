@@ -1,31 +1,37 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using ClassLibrary;
+using CryptocurrencyExchange.Models;
+using DbAccessLibrary.DataAccess;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
 namespace CryptocurrencyExchange.Controllers
 {
     public class MarketController : Controller
     {
+        private readonly MyDbContext _context;
+        public MarketController(MyDbContext context) { _context = context; }
+
+
         public IActionResult Index()
         {
-            List<dynamic> coinsPrice = new List<dynamic>();
             string[] coinsName = { "BTCUSDT", "ETHUSDT", "SOLUSDT", "LUNAUSDT","BNBUSDT",
                 "XRPUSDT", "DOGEUSDT", "SHIBUSDT", "AXSUSDT","MANAUSDT" };
-            string json;
 
-            foreach(var coinName in coinsName)
+            List<CoinOutputModel> outputCoins = new List<CoinOutputModel>();
+
+            var prices = CryptocurrencyOperations.GetPrices(coinsName);
+
+            foreach (var price in prices)
             {
-                using (var web = new System.Net.WebClient())
-                {
-                    var url = $"https://api.binance.com/api/v3/ticker/price?symbol={coinName}";
-                    json = web.DownloadString(url);
-                }
 
-                dynamic coinInfo = Newtonsoft.Json.JsonConvert.DeserializeObject(json);
-                coinsPrice.Add(coinInfo);
             }
-          
-            return View(coinsPrice);
+
+            return View();
         }
+
+
+
+
+
     }
 }

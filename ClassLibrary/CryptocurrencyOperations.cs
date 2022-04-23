@@ -31,7 +31,6 @@ namespace ClassLibrary
             }
 
                 return coinsPrice;
-
         }
 
         public static double Get24hChanges(string coinName, MyDbContext ctx)
@@ -49,7 +48,6 @@ namespace ClassLibrary
                 var deletes = ctx.OpenPrices;
                foreach(var delete in deletes)
                     ctx.OpenPrices.Remove(delete);
-
 
                 foreach (var coin in coinsPrice)
                 {

@@ -29,9 +29,5 @@ namespace CryptocurrencyExchange.Controllers
             return View();
         }
 
-
-
-
-
     }
 }

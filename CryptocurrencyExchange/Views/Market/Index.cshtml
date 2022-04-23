@@ -1,10 +1,4 @@
-﻿@model List<dynamic>
-
-
+﻿@*
+*@
 @{
-	foreach(var coin in @Model){
-		string coinName = coin.symbol;
-		decimal coinPrice = Convert.ToDecimal(coin.price);
-		<h4>@coinName: @coinPrice</h4>
-	}
 }

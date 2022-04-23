@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using DbAccessLibrary.DataAccess;
+using System.Collections.Generic;
 
 namespace ClassLibrary
 {
@@ -24,6 +25,13 @@ namespace ClassLibrary
             }
             return coinsPrice;
 
+        }
+
+        public static double Get24hChanges(string coinName,MyDbContext ctx)
+        {
+            double result = 0;
+
+            return result;
         }
     }
 

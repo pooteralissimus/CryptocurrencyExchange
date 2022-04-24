@@ -17,7 +17,8 @@ namespace CryptocurrencyExchange.Controllers
 		public IActionResult Index()
 		{
 
-			string[] coinsName = { "BTC"};
+			string[] coinsName = { "BTC","ETH", "XRP", "DOGE", "LUNA", 
+				"SOL", "ATOM", "AXS", "MANA"};
 
 			List<CoinOutputModel> outputCoins = new List<CoinOutputModel>();
 
@@ -42,15 +43,15 @@ namespace CryptocurrencyExchange.Controllers
 		}
 
 
-		[Route("Market/{coin}")]
-		public IActionResult Details(string coin)
+		[Route("Market/{coinName}")]
+		public IActionResult Details(string coinName)
 		{
-			ViewBag.coin = coin;
+			ViewBag.coin = coinName;
 
-			string[] coinToArray = { coin };
+			string[] coinToArray = { coinName };
 			dynamic price = Convert.ToDecimal(CryptocurrencyOperations.GetPrices(coinToArray, _context).Single().price);
 
-			string name = coin;
+			string name = coinName;
 			CoinOutputModel outputCoin = new CoinOutputModel()
 			{
 				Name = name,

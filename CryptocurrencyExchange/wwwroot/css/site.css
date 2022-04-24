@@ -220,9 +220,12 @@ body {
     border-bottom: 1px solid rgb(234, 236, 239);
     min-height: 4rem;
 }
+    .crypto-table__row:hover {
+        background-color: #f0f0f0;
+    }
 
-@supports (gap: clamp( 0.9375rem , 0.4900727069rem  +  2.2371364653vw , 1.5625rem )) {
-    .crypto-table__row {
+    @supports (gap: clamp( 0.9375rem , 0.4900727069rem  +  2.2371364653vw , 1.5625rem )) {
+        .crypto-table__row {
         gap: clamp( 0.9375rem, 0.4900727069rem + 2.2371364653vw, 1.5625rem );
     }
 }

@@ -1,10 +1,6 @@
 ﻿
     @model  List<CoinOutputModel>
 
-@{
- 
-
-  }
 <div class="wrapper">
     <header class="header">
         <div class="header__container">
@@ -25,16 +21,19 @@
                             @coin.Name
                         </div>
                     </div>
+
                     <div class="row-crypto-table__price">
                         $@coinPrice
                     </div>
 
                     <div id="divChangesColor" class="row-crypto-table__percent row-crypto-table__percent_red row-crypto-table_right">
-                         <span id="changes24h">@Math.Round(@coin.changes24h, 2)</span>%
+                       <span id="changes24h">@Math.Round(@coin.changes24h, 2)</span>%
                     </div>
+
                     <div class="row-crypto-table__amount row-crypto-table_right">
                       @coin.DayOpenPrice
                     </div>
+
                     <div class="row-crypto-table__links">
                         <a href="" class="row-crypto-table__link">Detail</a>
                         <a href="" class="row-crypto-table__link">Trade</a>

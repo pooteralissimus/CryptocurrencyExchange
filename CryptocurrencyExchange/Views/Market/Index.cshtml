@@ -14,7 +14,6 @@
     decimal coinPrice = Convert.ToDecimal(coin.Price);
              @using (Html.BeginForm("Details", "Market", new { coinName = coin.Name }, FormMethod.Post))
                             {
-                        <button>
                             <div class="crypto-table__row row-crypto-table">
                                 <div class="row-crypto-table__left-elem left-elem-row-crypto-table">
                                     <div class="left-elem-row-crypto-table__icon">
@@ -38,11 +37,10 @@
                                 </div>
 
                                 <div class="row-crypto-table__links">
-                                    <a href="" class="row-crypto-table__link">Detail</a>
-                                    <a href="" class="row-crypto-table__link">Trade</a>
+                                    <button class="row-crypto-table__link">Detail</button>
+                                    <button class="row-crypto-table__link">Trade</button>
                                 </div>
                             </div>
-                         </button>
                        }	
                         }
                 

@@ -1,10 +1,5 @@
 @model CoinOutputModel;
 
-@{
-
-	<h1>1 @Model.Name = $@Model.Price</h1>
-	<h2>Day opened with $@Model.DayOpenPrice, changes:  @Model.changes24h%</h2>
-}
 <div class="wrapper">
     <header class="header">
         <div class="header__container">
@@ -15,49 +10,48 @@
             <div class="details__container">
                 <div class="details__header">
                     <div class="details__image">
-                        <picture><source srcset="img/icons/crypto/bitcoin.webp" type="image/webp"><img src="img/icons/crypto/bitcoin.png" alt=""></picture>
+                        <picture><source srcset="https://bitcoin.org/img/icons/opengraph.png?1648897668" type="image/png">
+                            <img src="https://bitcoin.org/img/icons/opengraph.png?1648897668" alt=""></picture>
                     </div>
-                    <h1 class="details__title">Bitcoin Price</h1>
-                    <small class="details__small">(BTC)</small>
+                    <h1 class="details__title">@Model.Name Price</h1>
+                    <small class="details__small">@Model.Name</small>
                 </div>
                 <div class="details__price-box price-box">
                     <div class="price-box__stat stat">
                         <ul class="stat__title-list list-title-stat">
-                            <li class="list-title-stat__item list-title-stat__price">$ 39,716.60</li>
-                            <li class="list-title-stat__item list-title-stat__percent list-title-stat__percent_green">
-                                +0.25%
-                            </li>
+                            <li class="list-title-stat__item list-title-stat__price">$@Model.Price</li>
+                            <li class="list-title-stat__item list-title-stat__percent changes24h">@Model.Changes24h</li>
                         </ul>
                         <div class="price-box__info info-stat">
-                            <h3 class="info-stat__title">BTC Price Information</h3>
+                            <h3 class="info-stat__title">@Model.Name Price Information</h3>
                             <div class="info-stat__grid grid-info-stat">
                                 <div class="grid-info-stat__item">
                                     <div class="grid-info-stat__topic">All Time High</div>
-                                    <div class="grid-info-stat__price">$ 68,789.63</div>
+                                    <div class="grid-info-stat__price">Error</div>
                                 </div>
                                 <div class="grid-info-stat__item">
                                     <div class="grid-info-stat__topic">Price Change (24h)</div>
-                                    <div class="grid-info-stat__percent grid-info-stat__percent_green">+0.25%</div>
+                                    <div class="grid-info-stat__percent changes24">@Model.Changes24h</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="price-box__calc calc">
                         <div class="calc__title">
-                            BTC Price Calculator
+                            @Model.Name Price Calculator
                         </div>
                         <div class="calc__input-box">
                             <small class="calc__small">Buy</small>
                             <div class="calc__inner-input-box">
                                 <input id="calc-input" autocomplete="off" type="number" name="form[]" data-error="Îøèáêà" placeholder="0.00" class="calc__input input">
-                                <div class="calc__type">BTC</div>
+                                <div class="calc__type">@Model.Name</div>
                             </div>
                         </div>
                         <div class="calc__total total-calc">
                             Price
                             <div class="total-calc__price">USD $0.00</div>
                         </div>
-                        <a href="" class="calc__button button">Buy BTC</a>
+                        <a href="" class="calc__button button">Buy @Model.Name</a>
                     </div>
                 </div>
                 <div class="details__trends trends">

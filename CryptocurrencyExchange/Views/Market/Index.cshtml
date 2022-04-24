@@ -11,38 +11,35 @@
             <div class="crypto-table__container">
 
                  @foreach(var coin in @Model){
-    decimal coinPrice = Convert.ToDecimal(coin.Price);
-             @using (Html.BeginForm("Details", "Market", new { coinName = coin.Name }, FormMethod.Post))
+                    decimal coinPrice = Convert.ToDecimal(coin.Price);
+                             @using (Html.BeginForm("Details", "Market", new { coinName = coin.Name }, FormMethod.Post))
                             {
-                            <div class="crypto-table__row row-crypto-table">
-                                <div class="row-crypto-table__left-elem left-elem-row-crypto-table">
-                                    <div class="left-elem-row-crypto-table__icon">
-                                        <picture><source srcset="img/icons/crypto/bitcoin.webp" type="image/webp"><img src="img/icons/crypto/bitcoin.png" alt=""></picture>
-                                    </div>
-                                    <div class="left-elem-row-crypto-table__title">
-                                        @coin.Name
-                                    </div>
-                                </div>
+                                <div class="crypto-table__row row-crypto-table">
+                                    <div class="row-crypto-table__left-elem left-elem-row-crypto-table">
+                                        <div class="left-elem-row-crypto-table__icon">
+                                                <img src="~/Images/ATOM.png">
+                                        </div>
+                                                <div class="left-elem-row-crypto-table__title">
+                                                    @coin.Name
+                                                </div>
+                                            </div>
+                                            <div class="row-crypto-table__price">
+                                                $@coinPrice
+                                            </div>
+                                            <div id="divChangesColor" class="row-crypto-table__percent row-crypto-table 
+                                                row-crypto-table_right changes24">@coin.Changes24h</div>
 
-                                <div class="row-crypto-table__price">
-                                    $@coinPrice
-                                </div>
+                                            <div class="row-crypto-table__amount row-crypto-table_right">
+                                              @coin.DayOpenPrice
+                                            </div>
 
-                                <div id="divChangesColor" class="row-crypto-table__percent row-crypto-table__percent_red row-crypto-table_right">
-                                   <span id="changes24h">@coin.changes24h</span>%
-                                </div>
-
-                                <div class="row-crypto-table__amount row-crypto-table_right">
-                                  @coin.DayOpenPrice
-                                </div>
-
-                                <div class="row-crypto-table__links">
-                                    <button class="row-crypto-table__link">Detail</button>
-                                    <button class="row-crypto-table__link">Trade</button>
-                                </div>
-                            </div>
-                       }	
-                        }
+                                            <div class="row-crypto-table__links">
+                                                <button class="row-crypto-table__link">Detail</button>
+                                                <button class="row-crypto-table__link">Trade</button>
+                                            </div>
+                                        </div>
+                                   }	
+                                }
                 
                 </div>
             </div>

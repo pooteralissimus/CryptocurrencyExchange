@@ -27,10 +27,8 @@ namespace ClassLibrary
 			}
 
 			var date = DateTime.Now; //check for day open to save prices
-			if (date.Hour == 0)
-			{
-				DayOpenCheck(coinsPrice, ctx);
-			}
+				if(date.Hour == 0)
+					DayOpenCheck(coinsPrice, ctx);
 
 			return coinsPrice;
 		}
@@ -48,8 +46,6 @@ namespace ClassLibrary
 		public static void DayOpenCheck(List<dynamic> coinsPrice, MyDbContext ctx) //fix later
 		{
 			var date = DateTime.Now;
-			if (date.Hour == 0)
-			{
 				var deletes = ctx.OpenPrices;
 				foreach (var delete in deletes)
 					ctx.OpenPrices.Remove(delete);
@@ -62,7 +58,6 @@ namespace ClassLibrary
 					ctx.OpenPrices.Add(openPrice);
 				}
 				ctx.SaveChanges();
-			}
 		}
 
 	}

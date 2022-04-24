@@ -130,15 +130,15 @@ body {
     padding: 0 0.9375rem;
 }
 
-[class*=percent_red] {
+.percent_red {
     color: #CF304A;
 }
 
-[class*=percent_green] {
+.percent_green {
     color: #0ECB81;
 }
 
-.button {
+.button {   
     display: block;
     padding: 0px 0px;
     background-color: #eecd46;

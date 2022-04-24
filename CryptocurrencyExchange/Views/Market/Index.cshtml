@@ -29,8 +29,8 @@
                         $@coinPrice
                     </div>
 
-                    <div class="row-crypto-table__percent row-crypto-table__percent_red row-crypto-table_right">
-                      @Math.Round(@coin.changes24h, 2)%
+                    <div id="divChangesColor" class="row-crypto-table__percent row-crypto-table__percent_red row-crypto-table_right">
+                         <span id="changes24h">@Math.Round(@coin.changes24h, 2)</span>%
                     </div>
                     <div class="row-crypto-table__amount row-crypto-table_right">
                       @coin.DayOpenPrice

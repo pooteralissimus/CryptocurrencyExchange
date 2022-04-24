@@ -10,8 +10,9 @@
             <div class="details__container">
                 <div class="details__header">
                     <div class="details__image">
-                        <picture><source srcset="https://bitcoin.org/img/icons/opengraph.png?1648897668" type="image/png">
-                            <img src="https://bitcoin.org/img/icons/opengraph.png?1648897668" alt=""></picture>
+                        @{string imageSource = $"~/Images/{@Model.Name}.png";
+                             <img src="@Url.Content(imageSource)" >
+                            }
                     </div>
                     <h1 class="details__title">@Model.Name Price</h1>
                     <small class="details__small">@Model.Name</small>

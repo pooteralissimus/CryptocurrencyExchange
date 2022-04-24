@@ -6,6 +6,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\Images\ATOM.png" />
+    <None Include="wwwroot\Images\AXS.png" />
+    <None Include="wwwroot\Images\BTC.png" />
+    <None Include="wwwroot\Images\DOGE.png" />
+    <None Include="wwwroot\Images\ETH.png" />
+    <None Include="wwwroot\Images\LTC.png" />
+    <None Include="wwwroot\Images\LUNA.png" />
+    <None Include="wwwroot\Images\MANA.png" />
+    <None Include="wwwroot\Images\SOL.png" />
+    <None Include="wwwroot\Images\XRP.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.16" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.16" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.16" />

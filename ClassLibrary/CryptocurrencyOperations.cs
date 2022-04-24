@@ -27,8 +27,8 @@ namespace ClassLibrary
 			}
 
 			var date = DateTime.Now; //check for day open to save prices
-				if(date.Hour == 0)
-					DayOpenCheck(coinsPrice, ctx);
+				//if(date.Hour == 0)
+					//DayOpenCheck(coinsPrice, ctx);
 
 			return coinsPrice;
 		}

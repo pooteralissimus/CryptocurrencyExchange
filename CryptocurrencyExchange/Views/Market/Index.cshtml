@@ -12,12 +12,14 @@
 
                  @foreach(var coin in @Model){
                     decimal coinPrice = Convert.ToDecimal(coin.Price);
+                      string imageSource = $"~/Images/{@coin.Name}.png";
                              @using (Html.BeginForm("Details", "Market", new { coinName = coin.Name }, FormMethod.Post))
                             {
                                 <div class="crypto-table__row row-crypto-table">
                                     <div class="row-crypto-table__left-elem left-elem-row-crypto-table">
                                         <div class="left-elem-row-crypto-table__icon">
-                                                <img src="~/Images/ATOM.png">
+                                                <img src="@Url.Content(imageSource)" >
+                                              
                                         </div>
                                                 <div class="left-elem-row-crypto-table__title">
                                                     @coin.Name

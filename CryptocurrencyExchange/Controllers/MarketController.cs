@@ -8,46 +8,59 @@ using System.Linq;
 
 namespace CryptocurrencyExchange.Controllers
 {
-    public class MarketController : Controller
-    {
-        private readonly MyDbContext _context;
-        public MarketController(MyDbContext context) { _context = context; }
+	public class MarketController : Controller
+	{
+		private readonly MyDbContext _context;
+		public MarketController(MyDbContext context) { _context = context; }
 
 
-        public IActionResult Index()
-        {
+		public IActionResult Index()
+		{
 
-            string[] coinsName = { "BTC", "ETH", "SOL", "LUNA","BNB",
-                "XRP", "DOGE", "SHIB", "AXS","MANA", "LTC", "ATOM" };
+			string[] coinsName = { "BTC"};
 
-            List<CoinOutputModel> outputCoins = new List<CoinOutputModel>();
+			List<CoinOutputModel> outputCoins = new List<CoinOutputModel>();
 
-            var prices = CryptocurrencyOperations.GetPrices(coinsName, _context);
+			var prices = CryptocurrencyOperations.GetPrices(coinsName, _context);
 
-            foreach (var price in prices)
-            {
-                string name = price.symbol;
-                name = name.Remove(name.Length - 4);
-                var coin = new CoinOutputModel()
-                {
-                    Name = name,
-                    Price = Convert.ToDecimal(price.price),
-                    DayOpenPrice = _context.OpenPrices.Where(x => x.CoinName == name).Single().OpenPrice,
-                };
+			foreach (var price in prices)
+			{
+				string name = price.symbol;
+				name = name.Remove(name.Length - 4); //remove usdt 
+				var coin = new CoinOutputModel()
+				{
+					Name = name,
+					Price = Convert.ToDecimal(price.price),
+					DayOpenPrice = _context.OpenPrices.Where(x => x.CoinName == name).Single().OpenPrice,
+				};
 
-                double tmp = (double)(coin.Price - coin.DayOpenPrice); //24h changes calculate in percents
-                double a = (tmp * 100) / (double)coin.Price;
-                coin.changes24h = a;
-                outputCoins.Add(coin);
-            }
+				coin.changes24h = CryptocurrencyOperations.Get24hChanges(coin.Name, coin.Price, _context);
+				outputCoins.Add(coin);
+			}
 
-            return View(outputCoins);
-        }
+			return View(outputCoins);
+		}
 
-        public IActionResult Details()
-        {
-            return View();
-        }
 
-    }
+		[Route("Market/{coin}")]
+		public IActionResult Details(string coin)
+		{
+			ViewBag.coin = coin;
+
+			string[] coinToArray = { coin };
+			dynamic price = Convert.ToDecimal(CryptocurrencyOperations.GetPrices(coinToArray, _context).Single().price);
+
+			string name = coin;
+			CoinOutputModel outputCoin = new CoinOutputModel()
+			{
+				Name = name,
+				Price = price,
+			changes24h =  CryptocurrencyOperations.Get24hChanges(name, price, _context),
+			DayOpenPrice = _context.OpenPrices.Where(x=> x.CoinName == name).Single().OpenPrice
+			};
+
+			return View(outputCoin);
+		}
+
+	}
 }

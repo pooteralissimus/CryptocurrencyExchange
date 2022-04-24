@@ -1,1 +1,7 @@
-﻿
+﻿@model CoinOutputModel;
+
+@{
+
+	<h1>1 @Model.Name = $@Model.Price</h1>
+	<h2>Day opened with $@Model.DayOpenPrice, changes:  @Model.changes24h%</h2>
+}

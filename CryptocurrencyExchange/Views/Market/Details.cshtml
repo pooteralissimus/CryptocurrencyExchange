@@ -1,4 +1,4 @@
-@model CoinOutputModel;
+@model List<CoinOutputModel>;
 
 <div class="wrapper">
     <header class="header">
@@ -10,21 +10,21 @@
             <div class="details__container">
                 <div class="details__header">
                     <div class="details__image">
-                        @{string imageSource = $"~/Images/{@Model.Name}.png";
+                        @{string imageSource = $"~/Images/{@ViewBag.coin.Name}.png";
                              <img src="@Url.Content(imageSource)" >
                             }
                     </div>
-                    <h1 class="details__title">@Model.Name Price</h1>
-                    <small class="details__small">@Model.Name</small>
+                    <h1 class="details__title">@ViewBag.coin.Name Price</h1>
+                    <small class="details__small">@ViewBag.coin.Name</small>
                 </div>
                 <div class="details__price-box price-box">
                     <div class="price-box__stat stat">
                         <ul class="stat__title-list list-title-stat">
-                            <li class="list-title-stat__item list-title-stat__price">$@Model.Price</li>
-                            <li class="list-title-stat__item list-title-stat__percent changes24h">@Model.Changes24h</li>
+                            <li class="list-title-stat__item list-title-stat__price">$<span id="coinPriceSpan">@ViewBag.coin.Price</span></li>
+                            <li class="list-title-stat__item list-title-stat__percent"><div class="changes24">@ViewBag.coin.Changes24h</div></li>
                         </ul>
                         <div class="price-box__info info-stat">
-                            <h3 class="info-stat__title">@Model.Name Price Information</h3>
+                            <h3 class="info-stat__title">@ViewBag.coin.Name Price Information</h3>
                             <div class="info-stat__grid grid-info-stat">
                                 <div class="grid-info-stat__item">
                                     <div class="grid-info-stat__topic">All Time High</div>
@@ -32,80 +32,53 @@
                                 </div>
                                 <div class="grid-info-stat__item">
                                     <div class="grid-info-stat__topic">Price Change (24h)</div>
-                                    <div class="grid-info-stat__percent changes24">@Model.Changes24h</div>
+                                    <div class="grid-info-stat__percent changes24">@ViewBag.coin.Changes24h</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="price-box__calc calc">
                         <div class="calc__title">
-                            @Model.Name Price Calculator
+                            @ViewBag.coin.Name Price Calculator
                         </div>
                         <div class="calc__input-box">
                             <small class="calc__small">Buy</small>
                             <div class="calc__inner-input-box">
                                 <input id="calc-input" autocomplete="off" type="number" name="form[]" data-error="Îøèáêà" placeholder="0.00" class="calc__input input">
-                                <div class="calc__type">@Model.Name</div>
+                                <div class="calc__type">@ViewBag.coin.Name</div>
                             </div>
                         </div>
                         <div class="calc__total total-calc">
                             Price
-                            <div class="total-calc__price">USD $0.00</div>
+                            <div class="total-calc__price">USD<span id="totalPrice">$0.00</span></div>
                         </div>
-                        <a href="" class="calc__button button">Buy @Model.Name</a>
+                        <a href="" class="calc__button button">Buy @ViewBag.coin.Name</a>
                     </div>
                 </div>
+
                 <div class="details__trends trends">
                     <h2 class="trends__title">Trending cryptos</h2>
                     <ul class="trends__list">
-                        <a href="" class="trends__item item-trends">
-                            <div class="item-trends__name-section">
+
+                        @{
+                            foreach(var coin in Model){
+
+                                <a href="" class="trends__item item-trends">
+                                    <div class="item-trends__name-section">
                                 <div class="item-trends__icon">
-                                    <picture><source srcset="img/icons/crypto/ethereum.webp" type="image/webp"><img src="img/icons/crypto/ethereum.png" alt=""></picture>
+                                @{string path = $"~/Images/{coin.Name}.png";
+                                   <img src="@Url.Content(path)" >
+                                    }
                                 </div>
-                                <h5 class="item-trends__title">Ethereum</h5>
+                                <h5 class="item-trends__title">@coin.Name</h5>
                             </div>
                             <div class="item-trends__price-section">
-                                <div class="item-trends__price">$ 2,952.60</div>
-                                <div class="item-trends__percent item-trends__percent_red">-0.9%</div>
+                                <div class="item-trends__price">$@coin.Price</div>
+                                <div class="item-trends__percent item-trends changes24">@coin.Changes24h%</div>
                             </div>
                         </a>
-                        <a href="" class="trends__item item-trends">
-                            <div class="item-trends__name-section">
-                                <div class="item-trends__icon">
-                                    <picture><source srcset="img/icons/crypto/ethereum.webp" type="image/webp"><img src="img/icons/crypto/ethereum.png" alt=""></picture>
-                                </div>
-                                <h5 class="item-trends__title">Ethereum</h5>
-                            </div>
-                            <div class="item-trends__price-section">
-                                <div class="item-trends__price">$ 2,952.60</div>
-                                <div class="item-trends__percent item-trends__percent_red">-0.9%</div>
-                            </div>
-                        </a>
-                        <a href="" class="trends__item item-trends">
-                            <div class="item-trends__name-section">
-                                <div class="item-trends__icon">
-                                    <picture><source srcset="img/icons/crypto/ethereum.webp" type="image/webp"><img src="img/icons/crypto/ethereum.png" alt=""></picture>
-                                </div>
-                                <h5 class="item-trends__title">Ethereum</h5>
-                            </div>
-                            <div class="item-trends__price-section">
-                                <div class="item-trends__price">$ 2,952.60</div>
-                                <div class="item-trends__percent item-trends__percent_red">-0.9%</div>
-                            </div>
-                        </a>
-                        <a href="" class="trends__item item-trends">
-                            <div class="item-trends__name-section">
-                                <div class="item-trends__icon">
-                                    <picture><source srcset="img/icons/crypto/ethereum.webp" type="image/webp"><img src="img/icons/crypto/ethereum.png" alt=""></picture>
-                                </div>
-                                <h5 class="item-trends__title">Ethereum</h5>
-                            </div>
-                            <div class="item-trends__price-section">
-                                <div class="item-trends__price">$ 2,952.60</div>
-                                <div class="item-trends__percent item-trends__percent_red">-0.9%</div>
-                            </div>
-                        </a>
+                        }
+                        }
                     </ul>
                 </div>
             </div>

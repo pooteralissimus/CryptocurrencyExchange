@@ -1,19 +1,4 @@
-﻿////$(".row-crypto-table__percent_red").each(function () {
-////    var changes24h = $($(this).contents()[1]).text();
-////    if (parseFloat(changes24h) >= 0) {
-////        $(this).removeClass("row-crypto-table__percent_red")
-////        $(this).addClass("row-crypto-table__percent_green")
-////        $(this).text("+" + changes24h + "%")
-////    }
-////    else {
-////        $(this).text("-" + changes24h + "%")
-////    }
-////})
-
-//$(".changes24").each(function (i)) {
-//    $(this).addClass("percent_green")
-//
-
+﻿
 $(".changes24").each(function () {
     var percent = $(this).text()
     if (parseFloat($(this).text()) >= 0) {
@@ -25,4 +10,24 @@ $(".changes24").each(function () {
         $(this).addClass("percent_red")
         $(this).text(percent+"%")
     }
+});
+
+
+$(function () {
+
+    $('#calc-input').on('input', function (e) {
+        var price = +$("#coinPriceSpan").text()
+        var quantity = +$('#calc-input').val()
+        if (quantity < 0) {
+            alert("you cant buy less then 0 coins");
+            $('#calc-input').val(0);
+            $('#totalPrice').val(0);
+            return;
+        }
+        var total = +price * quantity
+        total = total.toFixed(2)
+        $('#totalPrice').text("$" + total);
+       // $('#priceOutput').text(total + "$");
+    });
+
 });

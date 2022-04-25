@@ -11,7 +11,7 @@
             <div class="crypto-table__container">
 
                  @foreach(var coin in @Model){
-                    decimal coinPrice = Convert.ToDecimal(coin.Price);
+                    decimal coinPrice =coin.Price;
                       string imageSource = $"~/Images/{@coin.Name}.png";
                              @using (Html.BeginForm("Details", "Market", new { coinName = coin.Name }, FormMethod.Post))
                             {

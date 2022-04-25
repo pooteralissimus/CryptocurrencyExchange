@@ -1,32 +1,30 @@
 ﻿using ClassLibrary;
-using CryptocurrencyExchange.Models;
 using DbAccessLibrary.DataAccess;
+using DbAccessLibrary.Models;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 
 namespace CryptocurrencyExchange.Controllers
 {
     public class MarketController : Controller
     {
         private readonly MyDbContext _context;
-        private readonly string[] coinsName = { "BTC","ETH", "XRP", "DOGE", "LUNA",
+        private readonly string[] _coinsName = { "BTC","ETH", "XRP", "DOGE", "LUNA",
                 "SOL", "ATOM", "AXS", "MANA"};
         public MarketController(MyDbContext context) { _context = context; }
 
 
         public IActionResult Index()
         {
-            List<CoinOutputModel> outputCoins = new List<CoinOutputModel>();
-
-            var coins = CryptocurrencyOperations.GetPrices(coinsName, _context);
+            var coins = CryptocurrencyOperations.GetPrices(_coinsName, _context);
 
             return View(coins);
         }
 
 
-        [Route("Market/{coinName}")]
+        [Route("Market/info/{coinName}")]
         public IActionResult Details(string coinName)
         {
             string[] coinToArray = { coinName };
@@ -38,6 +36,28 @@ namespace CryptocurrencyExchange.Controllers
             string[] trengingCoins = { "BTC", "ETH", "LUNA" };
             var trendingCryptos = CryptocurrencyOperations.GetPrices(trengingCoins, _context);
             return View(trendingCryptos);
+        }
+
+
+        [HttpPost]
+        public IActionResult Buy(string coinName, decimal coinPrice, decimal quantity)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var balance = _context.UserBalance.Where(x => x.UserId == userId && x.CoinName == "USDT").SingleOrDefault();
+            decimal total = coinPrice * quantity;
+
+            if (total > balance.CoinQuantity)
+                return RedirectToAction("Index", "Market");
+
+            balance.CoinQuantity -= total;
+            _context.UserBalance.Add(new UserBalance()
+            {
+                UserId = userId,
+                CoinName = coinName,
+                CoinQuantity = quantity
+            });
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Market");
         }
 
     }

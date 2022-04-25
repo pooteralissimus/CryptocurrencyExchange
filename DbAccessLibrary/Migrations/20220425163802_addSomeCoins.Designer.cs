@@ -3,14 +3,16 @@ using DbAccessLibrary.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DbAccessLibrary.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220425163802_addSomeCoins")]
+    partial class addSomeCoins
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,14 +45,41 @@ namespace DbAccessLibrary.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CoinName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<decimal>("Atom")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("CoinQuantity")
+                    b.Property<decimal>("Axs")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Bitcoin")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Dogecoin")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Etherium")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Litecoin")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Luna")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Mana")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Solana")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Usdt")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Xrp")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 

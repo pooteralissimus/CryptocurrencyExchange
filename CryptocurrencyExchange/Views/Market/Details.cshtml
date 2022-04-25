@@ -41,18 +41,22 @@
                         <div class="calc__title">
                             @ViewBag.coin.Name Price Calculator
                         </div>
-                        <div class="calc__input-box">
-                            <small class="calc__small">Buy</small>
-                            <div class="calc__inner-input-box">
-                                <input id="calc-input" autocomplete="off" type="number" name="form[]" data-error="Îøèáêà" placeholder="0.00" class="calc__input input">
-                                <div class="calc__type">@ViewBag.coin.Name</div>
+                            <form method="POST" asp-action="Buy" asp-controller="Market"  asp-route-coinName="@ViewBag.coin.Name"
+                            asp-route-coinPrice="@ViewBag.coin.Price">
+                            <div class="calc__input-box">
+                                <small class="calc__small">Buy</small>
+                                <div class="calc__inner-input-box">
+                                    <input id="calc-input" autocomplete="off" type="number" name="quantity" data-error="Îøèáêà" step=".000001" placeholder="0.00" class="calc__input input">
+                                    <div class="calc__type">@ViewBag.coin.Name</div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="calc__total total-calc">
-                            Price
-                            <div class="total-calc__price">USD<span id="totalPrice">$0.00</span></div>
-                        </div>
-                        <a href="" class="calc__button button">Buy @ViewBag.coin.Name</a>
+                        
+                            <div class="calc__total total-calc">
+                                Price
+                                <div class="total-calc__price">USD <span id="totalPrice" name="total">$0.00</span></div>
+                            </div>
+                            <button type="submit" class="calc__button button">Buy @ViewBag.coin.Name</button>
+                            </form>
                     </div>
                 </div>
 

@@ -1,0 +1,15 @@
+﻿@using DbAccessLibrary.Models
+@model List<AccountBalanceOutput>
+
+
+@{
+	decimal total = 0;
+	decimal balance = 0;
+	foreach(var coin in @Model){
+		balance = @coin.Quantity * @coin.CoinPrice;
+		<h1>@coin.CoinName - $@Math.Round(@balance,2)</h1>
+		total += balance;
+	}
+	<br />
+	<h2>$@Math.Round(@total,2)</h2>
+	}

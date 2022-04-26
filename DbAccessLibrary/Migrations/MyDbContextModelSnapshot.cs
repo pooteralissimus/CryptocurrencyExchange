@@ -18,6 +18,27 @@ namespace DbAccessLibrary.Migrations
                 .HasAnnotation("ProductVersion", "5.0.16")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("DbAccessLibrary.Models.AccountBalance", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CoinName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AccountsBalance");
+                });
+
             modelBuilder.Entity("DbAccessLibrary.Models.CryptoOpenPrices", b =>
                 {
                     b.Property<int>("Id")
@@ -34,27 +55,6 @@ namespace DbAccessLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("OpenPrices");
-                });
-
-            modelBuilder.Entity("DbAccessLibrary.Models.UserBalance", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CoinName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("CoinQuantity")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UserBalance");
                 });
 #pragma warning restore 612, 618
         }

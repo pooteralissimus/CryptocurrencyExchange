@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace DbAccessLibrary.Models
 {
-    public class UserBalance
+    public class AccountBalance
     {
-        public int Id { get; set; } 
+        public int Id { get; set; }
         public string UserId { get; set; }
         public string CoinName { get; set; }
-        public decimal CoinQuantity { get; set; }
+        public decimal Quantity { get; set; }
     }
 }

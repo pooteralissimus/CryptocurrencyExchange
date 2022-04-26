@@ -84,7 +84,7 @@ namespace CryptocurrencyExchange.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     //create user balance for user id
-                    var userBalance = new UserBalance() { UserId = user.Id, CoinName = "USDT", CoinQuantity = 500 };
+                    var userBalance = new AccountBalance() { UserId = user.Id, CoinName = "USDT", Quantity = 500 };
                     _context.Add(userBalance);
                     await _context.SaveChangesAsync();
 

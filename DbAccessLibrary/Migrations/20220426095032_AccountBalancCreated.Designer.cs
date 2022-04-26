@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DbAccessLibrary.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20220425164555_redoUserBalanceModel")]
-    partial class redoUserBalanceModel
+    [Migration("20220426095032_AccountBalancCreated")]
+    partial class AccountBalancCreated
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -19,6 +19,27 @@ namespace DbAccessLibrary.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.16")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("DbAccessLibrary.Models.AccountBalance", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CoinName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AccountsBalance");
+                });
 
             modelBuilder.Entity("DbAccessLibrary.Models.CryptoOpenPrices", b =>
                 {
@@ -36,27 +57,6 @@ namespace DbAccessLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("OpenPrices");
-                });
-
-            modelBuilder.Entity("DbAccessLibrary.Models.UserBalance", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CoinName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("CoinQuantity")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UserBalance");
                 });
 #pragma warning restore 612, 618
         }

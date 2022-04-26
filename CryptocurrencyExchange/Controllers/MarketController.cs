@@ -43,18 +43,18 @@ namespace CryptocurrencyExchange.Controllers
         public IActionResult Buy(string coinName, decimal coinPrice, decimal quantity)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var balance = _context.UserBalance.Where(x => x.UserId == userId && x.CoinName == "USDT").SingleOrDefault();
+            var balance = _context.AccountsBalance.Where(x => x.UserId == userId && x.CoinName == "USDT").SingleOrDefault();
             decimal total = coinPrice * quantity;
 
-            if (total > balance.CoinQuantity)
+            if (total > balance.Quantity)
                 return RedirectToAction("Index", "Market");
 
-            balance.CoinQuantity -= total;
-            _context.UserBalance.Add(new UserBalance()
+            balance.Quantity -= total;
+            _context.AccountsBalance.Add(new AccountBalance()
             {
                 UserId = userId,
                 CoinName = coinName,
-                CoinQuantity = quantity
+                Quantity = quantity
             });
             _context.SaveChanges();
             return RedirectToAction("Index", "Market");

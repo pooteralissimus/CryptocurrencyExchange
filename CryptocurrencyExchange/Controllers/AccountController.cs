@@ -21,7 +21,7 @@ namespace CryptocurrencyExchange.Controllers
 
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var list = _context.UserBalance.Where(x => x.UserId == userId && x.CoinName != "USDT").ToList();
+            var list = _context.AccountsBalance.Where(x => x.UserId == userId && x.CoinName != "USDT").ToList();
             string[] personalCoins = new string[list.Count()];
             int i = 0;
             foreach (var coin in list)
@@ -38,7 +38,7 @@ namespace CryptocurrencyExchange.Controllers
                 {
                     CoinName = coin.Name,
                     CoinPrice = coin.Price,
-                    Quantity = list.Where(x => x.CoinName == coin.Name).Single().CoinQuantity
+                    Quantity = list.Where(x => x.CoinName == coin.Name).Single().Quantity
                 });
             }
             

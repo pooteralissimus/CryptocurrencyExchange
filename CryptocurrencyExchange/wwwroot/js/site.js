@@ -1,10 +1,11 @@
 ﻿
-$(".changes24").each(function () {
+$(".changes24").each(function () { // select the color for percent of price changing
     var percent = $(this).text()
     if (parseFloat($(this).text()) >= 0) {
         $(this).addClass("percent_green")
         $(this).text("+"+percent+"%")
     } else if (parseFloat($(this).text()) == 0) {
+        $(this).addClass("percent_green")
         $(this).text("+0%")
     } else {
         $(this).addClass("percent_red")
@@ -13,7 +14,7 @@ $(".changes24").each(function () {
 });
 
 
-$(function () {
+$(function () {   // calculate price after input a value
 
     $('#calc-input').on('input', function (e) {
         var price = +$("#coinPriceSpan").text()
@@ -27,7 +28,7 @@ $(function () {
         var total = +price * quantity
         total = total.toFixed(2)
         $('#totalPrice').text("$" + total);
-       // $('#priceOutput').text(total + "$");
     });
 
 });
+

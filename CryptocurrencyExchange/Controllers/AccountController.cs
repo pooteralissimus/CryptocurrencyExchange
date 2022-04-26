@@ -45,5 +45,17 @@ namespace CryptocurrencyExchange.Controllers
 
             return View(accountBalaceOutput);
         }
+
+
+        public IActionResult Sell(string coinName, decimal coinPrice, decimal quantity)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var usdtQuantity = coinPrice * quantity;
+            var accountBalance = _context.AccountsBalance.Where(x => x.UserId == userId).ToList();
+            accountBalance.Where(x => x.CoinName == "USDT").Single().Quantity += usdtQuantity;
+            accountBalance.Where(x => x.CoinName == coinName).Single().Quantity -= quantity;
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Account");
+        }
     }
 }

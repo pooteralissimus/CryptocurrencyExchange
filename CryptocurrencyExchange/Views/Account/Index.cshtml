@@ -3,13 +3,25 @@
 
 
 @{
-	decimal total = 0;
-	decimal balance = 0;
-	foreach(var coin in @Model){
-		balance = @coin.Quantity * @coin.CoinPrice;
-		<h1>@coin.CoinName - $@Math.Round(@balance,2)</h1>
-		total += balance;
+    decimal total = 0;
+    decimal balance = 0;
+    int round = 2;
+    foreach(var coin in @Model){
+        balance = coin.Quantity * coin.CoinPrice;
+        round = coin.Quantity > 9 ? round = 2 : round = 5;
+        <h1>@Math.Round(@coin.Quantity,round) @coin.CoinName ~$@Math.Round(@balance,2)</h1>
+        <form method="POST" asp-action="Sell" asp-controller="Account"  asp-route-coinName="@coin.CoinName"
+                asp-route-coinPrice="@coin.CoinPrice">
+              <div >
+                 <input id="calc-input" autocomplete="off" type="number" name="quantity" step=".000001" placeholder="0.00" class="calc__input input"
+                 style="background-color:lightgray; border-radius:10px; width:300px;">
+                <button type="submit" class="button">Sell</button>
+             <div>You will get <span id="totalPrice" name="total">$0.00</span></div>
+             <span id="coinPriceSpan" style="visibility:hidden">@coin.CoinPrice</span>
+                <hr/>
+        </form>
+		        total += balance;
 	}
 	<br />
-	<h2>$@Math.Round(@total,2)</h2>
+	<h2>total: $@Math.Round(@total,2)</h2>
 	}

@@ -38,11 +38,11 @@ namespace CryptocurrencyExchange.Controllers
                 {
                     CoinName = coin.Name,
                     CoinPrice = coin.Price,
-                    Quantity = list.Where(x => x.CoinName == coin.Name).Single().Quantity
+                    Quantity = list.Where(x => x.CoinName == coin.Name).Single().Quantity,
                 });
             }
-            
 
+            accountBalaceOutput = accountBalaceOutput.OrderByDescending(x => x.UsdtConvert).ToList();
             return View(accountBalaceOutput);
         }
 

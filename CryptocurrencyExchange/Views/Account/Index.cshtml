@@ -7,9 +7,8 @@
     decimal balance = 0;
     int round = 2;
     foreach(var coin in @Model){
-        balance = coin.Quantity * coin.CoinPrice;
         round = coin.Quantity > 9 ? round = 2 : round = 5;
-        <h1>@Math.Round(@coin.Quantity,round) @coin.CoinName ~$@Math.Round(@balance,2)</h1>
+        <h1>@Math.Round(@coin.Quantity,round) @coin.CoinName ~$@Math.Round(@coin.UsdtConvert,2)</h1>
         <form method="POST" asp-action="Sell" asp-controller="Account"  asp-route-coinName="@coin.CoinName"
                 asp-route-coinPrice="@coin.CoinPrice">
               <div >

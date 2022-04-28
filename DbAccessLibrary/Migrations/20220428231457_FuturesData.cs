@@ -15,7 +15,7 @@ namespace DbAccessLibrary.Migrations
                     UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CoinName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Leverage = table.Column<int>(type: "int", nullable: false),
-                    OpenPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    OpenPrice = table.Column<decimal>(type: "decimal(18,5)", nullable: false)
                 },
                 constraints: table =>
                 {

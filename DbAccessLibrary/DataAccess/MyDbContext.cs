@@ -13,6 +13,6 @@ namespace DbAccessLibrary.DataAccess
         public MyDbContext(DbContextOptions options) : base(options) { }
         public DbSet<AccountBalance> AccountsBalance { get; set; }
         public DbSet<CryptoOpenPrices> OpenPrices { get; set; }
-        public DbSet<FuturesData> futuresDatas { get; set; }
+        public DbSet<FuturesData> FuturesDatas { get; set; }
     }
 }

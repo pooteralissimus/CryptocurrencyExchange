@@ -26,7 +26,7 @@ namespace DbAccessLibrary.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "futuresDatas");
+                name: "FuturesDatas");
         }
     }
 }

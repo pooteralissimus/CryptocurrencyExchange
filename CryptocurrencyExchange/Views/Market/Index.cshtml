@@ -40,7 +40,8 @@
                                                         </div>
 
                                                         <div class="row-crypto-table__links">
-                                                            <a asp-action="Sort" asp-controller="Market" asp-route-coins="@Model" id="SortButton" class="row-crypto-table__link">Sort</a>
+                                                            <a asp-action="Sort" asp-controller="Market" id="SortButton" class="row-crypto-table__link">Sort</a>
+                                                            <a asp-action="Index" asp-controller="Futures" asp-route-coinName="@coin.Name" id="SortButton" class="row-crypto-table__link">Futures</a>
                                                             <button class="row-crypto-table__link">Buy</button>
                                                         </div>
                                         </div>

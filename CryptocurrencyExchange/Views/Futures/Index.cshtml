@@ -1,5 +1,96 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model List<CoinOutputModel>;
+
+<div class="wrapper">
+    <header class="header">
+        <div class="header__container">
+        </div>
+    </header>
+    <main class="page">
+        <section class="page__details details">
+            <div class="details__container">
+                <div class="details__header">
+                    <div class="details__image">
+                        @{string imageSource = $"~/Images/{@ViewBag.coin.Name}.png";
+                             <img src="@Url.Content(imageSource)" >
+                            }
+                    </div>
+                    <h1 class="details__title">@ViewBag.coin.Name Price</h1>
+                    <small class="details__small">@ViewBag.coin.Name</small>
+                </div>
+                <div class="details__price-box price-box">
+                    <div class="price-box__stat stat">
+                        <ul class="stat__title-list list-title-stat">
+                            <li class="list-title-stat__item list-title-stat__price">$<span id="coinPriceSpan">@ViewBag.coin.Price</span></li>
+                            <li class="list-title-stat__item list-title-stat__percent"><div class="changes24">@ViewBag.coin.Changes24h<span>%</span></div></li>
+                        </ul>
+                        <div class="price-box__info info-stat">
+                            <h3 class="info-stat__title">@ViewBag.coin.Name Price Information</h3>
+                            <div class="info-stat__grid grid-info-stat">
+                                <div class="grid-info-stat__item">
+                                    <div class="grid-info-stat__topic">All Time High</div>
+                                    <div class="grid-info-stat__price">Error</div>
+                                </div>
+                                <div class="grid-info-stat__item">
+                                    <div class="grid-info-stat__topic">Price Change (24h)</div>
+                                    <div class="grid-info-stat__percent changes24">@ViewBag.coin.Changes24h<span>%</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="price-box__calc calc">
+                        <div class="calc__title">
+                            @ViewBag.coin.Name Price Calculator
+                        </div>
+                            <form asp-action="ShortLong" asp-controller="Futures"  asp-route-coinName="@ViewBag.coin.Name"
+                            asp-route-coinPrice="@ViewBag.coin.Price">
+                            <div class="calc__input-box">
+                                <small class="calc__small">Buy</small>
+                                <div class="calc__inner-input-box">
+                                    <input id="calc-input" autocomplete="off" type="number" name="quantity" data-error="Îøèáêà" step=".000001" placeholder="0.00" class="calc__input input">
+                                    <div class="calc__type">@ViewBag.coin.Name</div>
+                                </div>
+                            </div>
+                        
+                            <div class="calc__total total-calc">
+                                Price
+                                <div class="total-calc__price">USD <span id="totalPrice" name="total">$0.00</span></div>
+                            </div>
+                            <input type="submit" name="shortOrLong" value="long" class="calc__button button" style="background-color:#0ECB81; margin:10px;">Long</input>
+                            <input type="submit" name="shortOrLong" value="short" class="calc__button button" style="background-color:#CF304A; margin:10px;">Short</input>
+                            </form>
+                    </div>
+                </div>
+
+                <div class="details__trends trends">
+                    <h2 class="trends__title">Trending cryptos</h2>
+                    <ul class="trends__list">
+
+                        @{
+                            foreach(var coin in Model){
+
+                                <a href="" class="trends__item item-trends">
+                                    <div class="item-trends__name-section">
+                                <div class="item-trends__icon">
+                                @{string path = $"~/Images/{coin.Name}.png";
+                                   <img src="@Url.Content(path)" >
+                                    }
+                                </div>
+                                <h5 class="item-trends__title">@coin.Name</h5>
+                            </div>
+                            <div class="item-trends__price-section">
+                                <div class="item-trends__price">$@coin.Price</div>
+                                <div class="item-trends__percent item-trends changes24">@coin.Changes24h%</div>
+                            </div>
+                        </a>
+                        }
+                        }
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="footer__container">
+        </div>
+    </footer>
+</div>

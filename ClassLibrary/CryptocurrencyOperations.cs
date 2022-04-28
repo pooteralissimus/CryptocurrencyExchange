@@ -40,6 +40,7 @@ namespace ClassLibrary
                 List<CryptoOpenPrices> openDayPrices = new List<CryptoOpenPrices>();
                 foreach(var coin in coinsList)
                     openDayPrices.Add(new CryptoOpenPrices() { CoinName = coin.Name, OpenPrice = coin.Price });
+              //  SaveDayOpen(openDayPrices, ctx);
               }
 
             return coinsList;

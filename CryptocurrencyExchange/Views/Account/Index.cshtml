@@ -19,7 +19,7 @@
              <span id="coinPriceSpan" style="visibility:hidden">@coin.CoinPrice</span>
                 <hr/>
         </form>
-		        total += balance;
+		        total += coin.UsdtConvert;
 	}
 	<br />
 	<h2>total: $@Math.Round(@total,2)</h2>

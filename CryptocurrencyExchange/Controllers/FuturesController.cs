@@ -49,16 +49,6 @@ namespace CryptocurrencyExchange.Controllers
             };
             _context.FuturesDatas.Add(future);
             _context.SaveChanges();
-
-            //switch (shortOrLong)
-            //{
-            //    case "long":
-            //        break;
-            //    case "short":
-
-            //        break;
-            //}
-
             return RedirectToAction("Index", "Futures", new { coinName = coinName });
         }
 
@@ -72,6 +62,17 @@ namespace CryptocurrencyExchange.Controllers
 
 
             return View(output);
+        }
+
+        public IActionResult ClosePosition(string coinName)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var position = _context.FuturesDatas.Where(x=>x.UserId == userId && x.CoinName == coinName).Single();
+            _context.FuturesDatas.Remove(position);
+            var usdtBalance = _context.AccountsBalance.Where(x => x.UserId == userId && x.CoinName == "USDT").Single();
+            usdtBalance.Quantity = CryptocurrencyOperations.LongShort(position, _context).CurrentTotal;
+            _context.SaveChanges();
+            return RedirectToAction("Details", "Market", new {coinName = coinName});
         }
 
 

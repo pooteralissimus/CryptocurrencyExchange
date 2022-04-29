@@ -14,7 +14,7 @@ namespace DbAccessLibrary.Models
         public int Leverage { get; set; }
         public decimal OpenPrice { get; set; }
         public string LongShort { get; set; }
-        public decimal Quantity { get; set; }
+        public decimal Usdt { get; set; }
 
     }
 }

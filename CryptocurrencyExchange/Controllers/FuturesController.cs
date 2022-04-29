@@ -43,7 +43,7 @@ namespace CryptocurrencyExchange.Controllers
                 UserId = userId,
                 CoinName = coinName,
                 OpenPrice = coinPrice,
-                Quantity = quantity,
+                Usdt = total,
                 LongShort = shortOrLong,
                 Leverage = leverage
             };

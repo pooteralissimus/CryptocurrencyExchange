@@ -15,10 +15,9 @@ namespace ClassLibrary.Models
         {
             get
             {
-                return Math.Round(startedTotal - currentTotal, 2);
+                return Math.Round(currentTotal - startedTotal, 2);
             }
         }
-        public decimal CoinQuantity { get; set; }
         public int Leverage { get; set; }
         public float PercentChanges { get; set; }
 

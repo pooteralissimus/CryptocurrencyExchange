@@ -54,8 +54,7 @@ namespace ClassLibrary
             if(dayOpenPrice == -1)
             dayOpenPrice = ctx.OpenPrices.Where(x => x.CoinName == coinName).Single().OpenPrice;
 
-            double tmp = (double)(coinPrice - dayOpenPrice);
-            result = (float) ((tmp * 100) / (double)coinPrice);
+            result = (float)(((coinPrice - dayOpenPrice) / dayOpenPrice) * 100);
             return result;
         }
 
@@ -79,7 +78,7 @@ namespace ClassLibrary
             var changes = Get24hChanges(position.CoinName, currentCoinInfo.Price, position.OpenPrice);
             changes *= position.Leverage;
 
-            decimal usdtTotal = position.Quantity * position.OpenPrice;
+            decimal usdtTotal = position.Usdt;
             decimal difference = (usdtTotal / 100) * (decimal)changes;
 
             if (position.LongShort == "short") difference *= -1; // short means price goes down so difference * -1
@@ -88,12 +87,11 @@ namespace ClassLibrary
             FuturesPositionOutput output = new FuturesPositionOutput()
             {
                 CoinName = position.CoinName,
-                StartedTotal = position.Quantity * position.OpenPrice,
+                StartedTotal = position.Usdt,
                 OpenPrice = position.OpenPrice,
                 CurrentPrice = currentCoinInfo.Price,
                 CurrentTotal = usdtTotal,
                 PercentChanges = changes,
-                CoinQuantity = position.Quantity,
                 Leverage = position.Leverage,
             };
 

@@ -17,7 +17,7 @@ namespace DbAccessLibrary.Migrations
                     LongSHort = table.Column<string>(type: "nvarchar(5)", nullable: true),
                     Leverage = table.Column<int>(type: "int", nullable: false),
                     OpenPrice = table.Column<decimal>(type: "decimal(18,5)", nullable: false),
-                    Quantity = table.Column<decimal>(type: "decimal(18,5)", nullable: false)
+                    Usdt = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {

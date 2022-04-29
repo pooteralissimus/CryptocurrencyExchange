@@ -13,6 +13,8 @@ namespace DbAccessLibrary.Models
         public string CoinName { get; set; }
         public int Leverage { get; set; }
         public decimal OpenPrice { get; set; }
+        public string LongShort { get; set; }
+        public decimal Quantity { get; set; }
 
     }
 }

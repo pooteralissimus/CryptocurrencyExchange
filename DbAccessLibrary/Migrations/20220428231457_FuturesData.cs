@@ -14,8 +14,10 @@ namespace DbAccessLibrary.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CoinName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LongSHort = table.Column<string>(type: "nvarchar(5)", nullable: true),
                     Leverage = table.Column<int>(type: "int", nullable: false),
-                    OpenPrice = table.Column<decimal>(type: "decimal(18,5)", nullable: false)
+                    OpenPrice = table.Column<decimal>(type: "decimal(18,5)", nullable: false),
+                    Quantity = table.Column<decimal>(type: "decimal(18,5)", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -1,5 +1,6 @@
 ﻿using ClassLibrary;
 using DbAccessLibrary.DataAccess;
+using DbAccessLibrary.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Security.Claims;
@@ -25,19 +26,38 @@ namespace CryptocurrencyExchange.Controllers
             return View(trendingCryptos);
         }
 
-        public IActionResult ShortLong(string coinName, decimal coinPrice, decimal quantity, string shortOrLong)
+        public IActionResult ShortLong(string coinName, decimal coinPrice, decimal quantity, string shortOrLong, int leverage = 10)
         {
-
             var total = coinPrice * quantity;
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var usdtBalance = _context.AccountsBalance.Where(x => x.UserId == userId && x.CoinName == "USDT").SingleOrDefault();
 
-            if(total > usdtBalance.Quantity)
+            if (total > usdtBalance.Quantity)
                 return RedirectToAction("Index", "Market");
 
             usdtBalance.Quantity -= total;
+            FuturesData future = new FuturesData()
+            {
+                UserId = userId,
+                CoinName = coinName,
+                OpenPrice = coinPrice,
+                Quantity = quantity,
+                LongShort = shortOrLong,
+                Leverage = leverage
+            };
+            _context.FuturesDatas.Add(future);
+            _context.SaveChanges();
 
-            return RedirectToAction("Index","Futures", new {coinName = coinName });
+            //switch (shortOrLong)
+            //{
+            //    case "long":
+            //        break;
+            //    case "short":
+
+            //        break;
+            //}
+
+            return RedirectToAction("Index", "Futures", new { coinName = coinName });
         }
 
 

@@ -1,4 +1,6 @@
 ﻿using ClassLibrary;
+using ClassLibrary.Models;
+using CryptocurrencyExchange.Models;
 using DbAccessLibrary.DataAccess;
 using DbAccessLibrary.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -58,6 +60,18 @@ namespace CryptocurrencyExchange.Controllers
             //}
 
             return RedirectToAction("Index", "Futures", new { coinName = coinName });
+        }
+
+
+        [Route("Futures/Position/{coinName}")]
+        public IActionResult Position(string coinName)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            FuturesData position = _context.FuturesDatas.Where(x => x.UserId == userId && x.CoinName == coinName).Single();
+            var output = CryptocurrencyOperations.LongShort(position,_context);
+
+
+            return View(output);
         }
 
 

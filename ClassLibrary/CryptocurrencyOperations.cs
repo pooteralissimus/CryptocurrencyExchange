@@ -1,4 +1,5 @@
-﻿using CryptocurrencyExchange.Models;
+﻿using ClassLibrary.Models;
+using CryptocurrencyExchange.Models;
 using DbAccessLibrary.DataAccess;
 using DbAccessLibrary.Models;
 using System;
@@ -29,7 +30,7 @@ namespace ClassLibrary
                     Price = Convert.ToDecimal(coinInfo.price),
                     Name = coinName,
                     DayOpenPrice = ctx.OpenPrices.Where(x => x.CoinName == coinName).Single().OpenPrice,
-                    Changes24h = Get24hChanges(coinName, Convert.ToDecimal(coinInfo.price), ctx)
+                    Changes24h = Get24hChanges(coinName, Convert.ToDecimal(coinInfo.price),-1, ctx)
                 };
 
                 coinsList.Add(coin);
@@ -46,13 +47,15 @@ namespace ClassLibrary
             return coinsList;
         }
 
-        public static double Get24hChanges(string coinName, decimal coinPrice, MyDbContext ctx)  //24h changes calculate in percents
+        public static float Get24hChanges(string coinName, decimal coinPrice,decimal dayOpenPrice = -1, MyDbContext ctx = null)  //24h changes calculate in percents
         {
-            double result = 0;
+            float result = 0;
 
-            var dayOpenPrice = ctx.OpenPrices.Where(x => x.CoinName == coinName).Single().OpenPrice;
+            if(dayOpenPrice == -1)
+            dayOpenPrice = ctx.OpenPrices.Where(x => x.CoinName == coinName).Single().OpenPrice;
+
             double tmp = (double)(coinPrice - dayOpenPrice);
-            result = (tmp * 100) / (double)coinPrice;
+            result = (float) ((tmp * 100) / (double)coinPrice);
             return result;
         }
 
@@ -68,6 +71,33 @@ namespace ClassLibrary
                 ctx.OpenPrices.Add(openPrice);
             }
             ctx.SaveChanges();
+        }
+
+        public static FuturesPositionOutput LongShort(FuturesData position, MyDbContext ctx)
+        {
+            var currentCoinInfo = GetPrices(new string[] { position.CoinName }, ctx).Single();
+            var changes = Get24hChanges(position.CoinName, currentCoinInfo.Price, position.OpenPrice);
+            changes *= position.Leverage;
+
+            decimal usdtTotal = position.Quantity * position.OpenPrice;
+            decimal difference = (usdtTotal / 100) * (decimal)changes;
+
+            if (position.LongShort == "short") difference *= -1; // short means price goes down so difference * -1
+
+            usdtTotal += difference;
+            FuturesPositionOutput output = new FuturesPositionOutput()
+            {
+                CoinName = position.CoinName,
+                StartedTotal = position.Quantity * position.OpenPrice,
+                OpenPrice = position.OpenPrice,
+                CurrentPrice = currentCoinInfo.Price,
+                CurrentTotal = usdtTotal,
+                PercentChanges = changes,
+                CoinQuantity = position.Quantity,
+                Leverage = position.Leverage,
+            };
+
+            return output;
         }
 
     }

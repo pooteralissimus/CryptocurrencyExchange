@@ -1,0 +1,10 @@
+﻿@using ClassLibrary.Models
+
+@model FuturesPositionOutput
+
+<h3>@Model.CoinName - @Model.CoinQuantity</h3>
+<h4>Open price: @Model.OpenPrice</h4>
+<h4>Current price: @Model.CurrentPrice</h4>
+<h4></h4>$@Model.StartedTotal -> $@Model.CurrentTotal</h4>
+<h4></h4>@Model.UsdtDifferece<span>$</span> @Model.PercentChanges<span>%</span></h4>
+<h4></h4>@Model.Leverage<span>x</span></h3>

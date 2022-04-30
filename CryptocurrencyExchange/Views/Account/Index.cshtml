@@ -9,15 +9,18 @@
     foreach(var coin in @Model){
         round = coin.Quantity > 9 ? round = 2 : round = 5;
         <h1>@Math.Round(@coin.Quantity,round) @coin.CoinName ~$@Math.Round(@coin.UsdtConvert,2)</h1>
-        <form method="POST" asp-action="Sell" asp-controller="Account"  asp-route-coinName="@coin.CoinName"
+        <form method="POST" asp-action="SellOrSend" asp-controller="Account"  asp-route-coinName="@coin.CoinName"
                 asp-route-coinPrice="@coin.CoinPrice">
               <div >
                  <input id="calc-input" autocomplete="off" type="number" name="quantity" step=".000001" placeholder="0.00" class="calc__input input"
                  style="background-color:lightgray; border-radius:10px; width:300px;">
-                <button type="submit" class="button">Sell</button>
+                <input type="submit" class="button" name="sellOrSend" value="Sell"/>
+                <input type="submit" class="button" name="sellOrSend" value="Send"/>
              <div>You will get <span id="totalPrice" name="total">$0.00</span></div>
              <span id="coinPriceSpan" style="visibility:hidden">@coin.CoinPrice</span>
                 <hr/>
+
+                
         </form>
 		        total += coin.UsdtConvert;
 	}

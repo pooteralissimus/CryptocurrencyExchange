@@ -1,7 +1,6 @@
 ﻿using ClassLibrary;
 using CryptocurrencyExchange.Models;
 using DbAccessLibrary.DataAccess;
-using DbAccessLibrary.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,9 +29,9 @@ namespace CryptocurrencyExchange.Controllers
                 i++;
             }
 
-            List<CoinOutputModel> coinsInfo = CryptocurrencyOperations.GetPrices(personalCoins,_context);
+            List<CoinOutputModel> coinsInfo = CryptocurrencyOperations.GetPrices(personalCoins, _context);
             List<AccountBalanceOutput> accountBalaceOutput = new List<AccountBalanceOutput>();
-            foreach(var coin in coinsInfo)
+            foreach (var coin in coinsInfo)
             {
                 accountBalaceOutput.Add(new AccountBalanceOutput()
                 {
@@ -47,15 +46,26 @@ namespace CryptocurrencyExchange.Controllers
         }
 
 
-        public IActionResult Sell(string coinName, decimal coinPrice, decimal quantity)
+        public IActionResult SellOrSend(string coinName, decimal coinPrice, decimal quantity, string sellOrSend)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var usdtQuantity = coinPrice * quantity;
-            var accountBalance = _context.AccountsBalance.Where(x => x.UserId == userId).ToList();
-            accountBalance.Where(x => x.CoinName == "USDT").Single().Quantity += usdtQuantity;
-            accountBalance.Where(x => x.CoinName == coinName).Single().Quantity -= quantity;
-            _context.SaveChanges();
+            if (sellOrSend == "Sell")
+            {
+                var usdtQuantity = coinPrice * quantity;
+                var accountBalance = _context.AccountsBalance.Where(x => x.UserId == userId).ToList();
+                accountBalance.Where(x => x.CoinName == "USDT").Single().Quantity += usdtQuantity;
+                accountBalance.Where(x => x.CoinName == coinName).Single().Quantity -= quantity;
+                _context.SaveChanges();
+            }
+            else if (sellOrSend == "Send")
+            {
+                CryptocurrencyOperations.Send(coinName, quantity, "9893056d-0be2-4ae5-8bfc-48db005e89aa",
+                    userId, _context);
+            }
+
+
             return RedirectToAction("Index", "Account");
         }
+
     }
 }

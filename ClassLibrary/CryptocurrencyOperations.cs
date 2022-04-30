@@ -30,35 +30,36 @@ namespace ClassLibrary
                     Price = Convert.ToDecimal(coinInfo.price),
                     Name = coinName,
                     DayOpenPrice = ctx.OpenPrices.Where(x => x.CoinName == coinName).Single().OpenPrice,
-                    Changes24h = Get24hChanges(coinName, Convert.ToDecimal(coinInfo.price),-1, ctx)
+                    Changes24h = Get24hChanges(coinName, Convert.ToDecimal(coinInfo.price), -1, ctx)
                 };
 
                 coinsList.Add(coin);
             }
 
             var date = DateTime.Now; //check for day open to save prices
-            if (date.Hour == 0) {
+            if (date.Hour == 0)
+            {
                 List<CryptoOpenPrices> openDayPrices = new List<CryptoOpenPrices>();
-                foreach(var coin in coinsList)
+                foreach (var coin in coinsList)
                     openDayPrices.Add(new CryptoOpenPrices() { CoinName = coin.Name, OpenPrice = coin.Price });
-              //  SaveDayOpen(openDayPrices, ctx);
-              }
+                //  SaveDayOpen(openDayPrices, ctx);
+            }
 
             return coinsList;
         }
 
-        public static float Get24hChanges(string coinName, decimal coinPrice,decimal dayOpenPrice = -1, MyDbContext ctx = null)  //24h changes calculate in percents
+        public static float Get24hChanges(string coinName, decimal coinPrice, decimal dayOpenPrice = -1, MyDbContext ctx = null)  //24h changes calculate in percents
         {
             float result = 0;
 
-            if(dayOpenPrice == -1)
-            dayOpenPrice = ctx.OpenPrices.Where(x => x.CoinName == coinName).Single().OpenPrice;
+            if (dayOpenPrice == -1)
+                dayOpenPrice = ctx.OpenPrices.Where(x => x.CoinName == coinName).Single().OpenPrice;
 
             result = (float)(((coinPrice - dayOpenPrice) / dayOpenPrice) * 100);
             return result;
         }
 
-        public static void SaveDayOpen(List<CryptoOpenPrices> opens, MyDbContext ctx) 
+        public static void SaveDayOpen(List<CryptoOpenPrices> opens, MyDbContext ctx)
         {
             var deletes = ctx.OpenPrices;
             foreach (var delete in deletes)
@@ -97,6 +98,33 @@ namespace ClassLibrary
 
             return output;
         }
+
+        public static void Send(string name, decimal quantity, string receiverId, string currentUserId, MyDbContext ctx)
+        {
+            var coinsFrom = ctx.AccountsBalance.Where(x => x.UserId == currentUserId && x.CoinName == name).Single();
+
+            var coinsTo = ctx.AccountsBalance.Where(x => x.UserId == receiverId && x.CoinName == name).SingleOrDefault();
+
+            if (coinsTo == null)
+            {
+                coinsTo = new AccountBalance()
+                {
+                    CoinName = name,
+                    Quantity = quantity,
+                    UserId = receiverId
+                };
+                ctx.AccountsBalance.Add(coinsTo);
+            }
+            else
+            {
+                coinsTo.Quantity += quantity;
+            }
+            coinsFrom.Quantity -= quantity;
+            ctx.SaveChanges();
+
+        }
+
+
 
     }
 

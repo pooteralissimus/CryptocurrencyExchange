@@ -108,11 +108,20 @@ namespace ClassLibrary
             ctx.SaveChanges();
         }
 
-        public static void Send(string name, decimal quantity, string receiverId, string currentUserId, MyDbContext ctx)
+        public static void Send(string name, decimal coinPrice, decimal quantity, string receiverId, string currentUserId, MyDbContext ctx)
         {
-            var coinsFrom = ctx.AccountsBalance.Where(x => x.UserId == currentUserId && x.CoinName == name).Single();
-
+          
+            var coinsFrom = ctx.AccountsBalance.Where(x => x.UserId == currentUserId && x.CoinName == name).Single(); 
             var coinsTo = ctx.AccountsBalance.Where(x => x.UserId == receiverId && x.CoinName == name).SingleOrDefault();
+
+            coinsFrom.Quantity -= quantity;
+
+            //1 usd fee
+            var feeUsdt = ctx.AccountsBalance.Where(x =>x.UserId == "955e0897-59b9-4b78-a7d0-24feafa33f58" && x.CoinName == "USDT").Single(); //exchange usdt address 
+            decimal oneUsd = 1; 
+            decimal oneUsdToCoin = oneUsd / coinPrice; //calculate current coin to 1 usd
+            quantity -= oneUsdToCoin;
+            feeUsdt.Quantity += oneUsd;
 
             if (coinsTo == null)
             {
@@ -128,7 +137,6 @@ namespace ClassLibrary
             {
                 coinsTo.Quantity += quantity;
             }
-            coinsFrom.Quantity -= quantity;
             ctx.SaveChanges();
 
         }

@@ -51,7 +51,7 @@ namespace CryptocurrencyExchange.Controllers
                 CryptocurrencyOperations.Sell(coinName, coinPrice, quantity, userId, _context);
 
             else if (sellOrSend == "Send")
-                CryptocurrencyOperations.Send(coinName, quantity, "9893056d-0be2-4ae5-8bfc-48db005e89aa", //test userId
+                CryptocurrencyOperations.Send(coinName,coinPrice, quantity, "9893056d-0be2-4ae5-8bfc-48db005e89aa", //test userId
                     userId, _context);
 
             return RedirectToAction("Index", "Account");

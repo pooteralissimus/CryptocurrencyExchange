@@ -38,7 +38,7 @@ namespace CryptocurrencyExchange.Controllers
                 return RedirectToAction("Index", "Market");
 
             usdtBalance.Quantity -= total;
-            FuturesData future = new FuturesData()
+            FuturesData position = new FuturesData()
             {
                 UserId = userId,
                 CoinName = coinName,
@@ -47,7 +47,7 @@ namespace CryptocurrencyExchange.Controllers
                 LongShort = shortOrLong,
                 Leverage = leverage
             };
-            _context.FuturesDatas.Add(future);
+            _context.FuturesDatas.Add(position);
             _context.SaveChanges();
             return RedirectToAction("Index", "Futures", new { coinName = coinName });
         }
@@ -59,7 +59,6 @@ namespace CryptocurrencyExchange.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             FuturesData position = _context.FuturesDatas.Where(x => x.UserId == userId && x.CoinName == coinName).Single();
             var output = CryptocurrencyOperations.LongShort(position,_context);
-
 
             return View(output);
         }

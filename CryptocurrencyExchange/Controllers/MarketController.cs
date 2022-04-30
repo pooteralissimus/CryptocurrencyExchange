@@ -15,7 +15,7 @@ namespace CryptocurrencyExchange.Controllers
         private readonly MyDbContext _context;
         private readonly string[] _coinsList = { "BTC","ETH", "XRP", "DOGE", "LUNA",
                 "SOL", "ATOM", "AXS", "MANA"};
-        public static List<CoinOutputModel> _coins;
+        public static List<CoinOutputModel> _coins; // list for save coins before sort and page reload
         public MarketController(MyDbContext context) { _context = context; }
 
 
@@ -53,19 +53,28 @@ namespace CryptocurrencyExchange.Controllers
         public IActionResult Buy(string coinName, decimal coinPrice, decimal quantity)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var balance = _context.AccountsBalance.Where(x => x.UserId == userId && x.CoinName == "USDT").SingleOrDefault();
+            var usdtBalance = _context.AccountsBalance.Where(x => x.UserId == userId && x.CoinName == "USDT").SingleOrDefault();
+
             decimal total = coinPrice * quantity;
 
-            if (total > balance.Quantity)
+            if (total > usdtBalance.Quantity)
                 return RedirectToAction("Index", "Market");
 
-            balance.Quantity -= total;
-            _context.AccountsBalance.Add(new AccountBalance()
+            var coinToBuyBalance = _context.AccountsBalance.Where(x => x.UserId == userId && x.CoinName == coinName).SingleOrDefault();
+            usdtBalance.Quantity -= total;
+            if (coinToBuyBalance == null)
             {
-                UserId = userId,
-                CoinName = coinName,
-                Quantity = quantity
-            });
+                var bal = new AccountBalance()
+                {
+                    UserId = userId,
+                    CoinName = coinName,
+                    Quantity = quantity
+                };
+                _context.AccountsBalance.Add(bal);
+            }
+            else
+                coinToBuyBalance.Quantity += quantity;
+
             _context.SaveChanges();
             return RedirectToAction("Index", "Market");
         }

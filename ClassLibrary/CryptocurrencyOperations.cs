@@ -30,7 +30,7 @@ namespace ClassLibrary
                     Price = Convert.ToDecimal(coinInfo.price),
                     Name = coinName,
                     DayOpenPrice = ctx.OpenPrices.Where(x => x.CoinName == coinName).Single().OpenPrice,
-                    Changes24h = Get24hChanges(coinName, Convert.ToDecimal(coinInfo.price), -1, ctx)
+                    Changes24h = Get24hChanges(coinName, Convert.ToDecimal(coinInfo.price), -1, ctx) //-1 means that open price is unknown
                 };
 
                 coinsList.Add(coin);
@@ -61,7 +61,7 @@ namespace ClassLibrary
 
         public static void SaveDayOpen(List<CryptoOpenPrices> opens, MyDbContext ctx)
         {
-            var deletes = ctx.OpenPrices;
+            var deletes = ctx.OpenPrices; //delete old coins price
             foreach (var delete in deletes)
                 ctx.OpenPrices.Remove(delete);
 
@@ -97,6 +97,15 @@ namespace ClassLibrary
             };
 
             return output;
+        }
+
+        public static void Sell(string coinName, decimal coinPrice, decimal quantity,string userId,MyDbContext ctx)
+        {
+            var usdtQuantity = coinPrice * quantity;
+            var accountBalance = ctx.AccountsBalance.Where(x => x.UserId == userId).ToList();
+            accountBalance.Where(x => x.CoinName == "USDT").Single().Quantity += usdtQuantity;
+            accountBalance.Where(x => x.CoinName == coinName).Single().Quantity -= quantity;
+            ctx.SaveChanges();
         }
 
         public static void Send(string name, decimal quantity, string receiverId, string currentUserId, MyDbContext ctx)

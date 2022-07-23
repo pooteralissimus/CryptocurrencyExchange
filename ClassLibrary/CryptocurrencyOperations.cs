@@ -5,6 +5,7 @@ using DbAccessLibrary.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ClassLibrary
 {
@@ -16,24 +17,28 @@ namespace ClassLibrary
             List<CoinOutputModel> coinsList = new List<CoinOutputModel>();
             string json;
 
-            foreach (var coinName in coinsName)
+            Parallel.ForEach(coinsName, coinName =>
             {
                 using (var web = new System.Net.WebClient())
                 {
                     var url = $"https://api.binance.com/api/v3/ticker/price?symbol={coinName}USDT";
                     json = web.DownloadString(url);
+
+                    dynamic coinInfo = Newtonsoft.Json.JsonConvert.DeserializeObject(json);
+                
+                        var coin = new CoinOutputModel()
+                        {
+                            Price = Convert.ToDecimal(coinInfo.price),
+                            Name = coinName,
+                        };
+                        coinsList.Add(coin);
                 }
+            });
 
-                dynamic coinInfo = Newtonsoft.Json.JsonConvert.DeserializeObject(json);
-                var coin = new CoinOutputModel()
-                {
-                    Price = Convert.ToDecimal(coinInfo.price),
-                    Name = coinName,
-                    DayOpenPrice = ctx.OpenPrices.Where(x => x.CoinName == coinName).Single().OpenPrice,
-                    Changes24h = Get24hChanges(coinName, Convert.ToDecimal(coinInfo.price), -1, ctx) //-1 means that open price is unknown
-                };
-
-                coinsList.Add(coin);
+            foreach(var coin in coinsList)
+            {
+                coin.DayOpenPrice = ctx.OpenPrices.Where(x => x.CoinName == coin.Name).Single().OpenPrice;
+                 coin.Changes24h = Get24hChanges(coin.Name, Convert.ToDecimal(coin.Price), coin.DayOpenPrice, ctx);
             }
 
             var date = DateTime.Now; //check for day open to save prices
@@ -44,7 +49,7 @@ namespace ClassLibrary
                     openDayPrices.Add(new CryptoOpenPrices() { CoinName = coin.Name, OpenPrice = coin.Price });
                 //  SaveDayOpen(openDayPrices, ctx);
             }
-
+            coinsList = coinsList.OrderByDescending(x=> x.Price).ToList();
             return coinsList;
         }
 
@@ -99,7 +104,7 @@ namespace ClassLibrary
             return output;
         }
 
-        public static void Sell(string coinName, decimal coinPrice, decimal quantity,string userId,MyDbContext ctx)
+        public static void Sell(string coinName, decimal coinPrice, decimal quantity, string userId, MyDbContext ctx)
         {
             var usdtQuantity = coinPrice * quantity;
             var accountBalance = ctx.AccountsBalance.Where(x => x.UserId == userId).ToList();
@@ -110,15 +115,15 @@ namespace ClassLibrary
 
         public static void Send(string name, decimal coinPrice, decimal quantity, string receiverId, string currentUserId, MyDbContext ctx)
         {
-          
-            var coinsFrom = ctx.AccountsBalance.Where(x => x.UserId == currentUserId && x.CoinName == name).Single(); 
+
+            var coinsFrom = ctx.AccountsBalance.Where(x => x.UserId == currentUserId && x.CoinName == name).Single();
             var coinsTo = ctx.AccountsBalance.Where(x => x.UserId == receiverId && x.CoinName == name).SingleOrDefault();
 
             coinsFrom.Quantity -= quantity;
 
             //1 usd fee
-            var feeUsdt = ctx.AccountsBalance.Where(x =>x.UserId == "955e0897-59b9-4b78-a7d0-24feafa33f58" && x.CoinName == "USDT").Single(); //exchange usdt address 
-            decimal oneUsd = 1; 
+            var feeUsdt = ctx.AccountsBalance.Where(x => x.UserId == "955e0897-59b9-4b78-a7d0-24feafa33f58" && x.CoinName == "USDT").Single(); //exchange usdt address 
+            decimal oneUsd = 1;
             decimal oneUsdToCoin = oneUsd / coinPrice; //calculate current coin to 1 usd
             quantity -= oneUsdToCoin;
             feeUsdt.Quantity += oneUsd;
